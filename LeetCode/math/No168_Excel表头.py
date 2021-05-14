@@ -8,10 +8,11 @@
 def excelTitle(num):
     res = ''
     while num:
-        res = chr((num-1) % 26 +65)+res
-        num = (num-1)//26
+        res = chr((num - 1) % 26 + 65) + res  # 注意顺序不是res+chr((num-1) % 26 +65)
+        num = (num - 1) // 26
         print(num)
     print(res)
+
 
 # print(ord('B'))
 # print(chr(65))

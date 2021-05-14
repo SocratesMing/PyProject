@@ -5,12 +5,12 @@
 
 def uniquePaht(row, col):
     res = [[0] * col] * row
-    res[0][0] = 0
+    res[0][0] = 0  # res存储的是走到当前各自格子共有多少种走法
     for x in range(row):
         for y in range(col):
-            if x == 0 and  y!= 0:  # x
+            if x == 0 and y != 0:  # x
                 res[x][y] = 1
-            elif x!=0 and y==0:
+            elif x != 0 and y == 0:
                 res[x][y] = 1
 
             else:

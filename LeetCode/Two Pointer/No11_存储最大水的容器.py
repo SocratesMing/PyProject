@@ -6,6 +6,7 @@ def mostCuntWater(arr):
 
     while start < stop:
         width = stop - start
+
         print(start,stop)
         if arr[start] > arr[stop]:
             hight = arr[stop]

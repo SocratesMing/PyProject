@@ -2,7 +2,7 @@
 # Output: [1,2]
 # Explanation: The sum of 2 and 7 is 9. Therefore index1 = 1, index2 = 2.
 
-def twoSum(arr,target):
+def twoSum(arr,target):  #双指针算法
 
     left,right = 0,len(arr)-1
     while left<right:

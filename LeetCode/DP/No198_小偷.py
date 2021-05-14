@@ -17,9 +17,9 @@ def houseRobber(arr):
         dp[0],dp[1]=arr[0],arr[1]
         for i in range(2,len(arr)):
             dp[i] = arr[i]+dp[i-2]
-            print(dp[i])
+            # print(dp[i])
 
-        return max(dp[i],dp[i-1])
+        return max(dp[-2],dp[-1])
 
 input = [2,7,9,3,1]
 print(houseRobber(input))

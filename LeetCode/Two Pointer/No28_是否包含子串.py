@@ -19,5 +19,5 @@ def implementstr1(haystack, needle):
 
 
 haystack = "hello"
-needle = "0"
+needle = "l"
 print(implementstr1(haystack, needle))

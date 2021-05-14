@@ -4,17 +4,16 @@
 
 def countArr(arr):
     n = len(arr)
-    count = 0
-    left, right = 0, 0
-    while left <= right and right < n:
-        if arr[left] == arr[right]:
-            right += 1
-        else:
-            print(arr[left], arr[right])
-            left = right
-            count += 1  # 统计的是当前指针的前一个元素
-
-    return count + 1  # 最后要把元素加上
+    last, find = 0, 0
+    while find < n-1:
+        while arr[last] == arr[find]:#遇到相同的数就跳过
+            find += 1
+            if find==n-1:
+                return last+1
+        # 退出循环时find与当前last值不同
+        arr[last+1]=arr[find]
+        last +=1
+    return last + 1  # 最后要把元素加上
 
 
 arr = [0, 0, 1, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 5, 5, 5]

@@ -11,14 +11,15 @@ def removeElement(arr, ele):
     j = 0  # j始终指向第一个要删除的元素
 
     for i in range(len(arr)):  # i始终指向当前元素
-        if arr[i] != ele: # i如果相同I继续J不变，如果不同JI互换
-            if i != j:
+        if arr[i] != ele:  # 与要删除的元素不相等
+
+            if i != j:  # 两个索引不同
                 arr[i], arr[j] = arr[j], arr[i]
                 j += 1
             else:
                 j += 1
+            print(i, j)
 
-    print(arr)
     return j
 
 
