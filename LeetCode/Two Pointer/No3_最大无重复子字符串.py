@@ -13,7 +13,7 @@ def longestNorepeatString(s):
             if s[right] not in s[left:right]:#自己的方法
                 right += 1
             else:
-                left += 1
+                left =right
             res = max(res, right - left)
             # print("dddd")
         return res
