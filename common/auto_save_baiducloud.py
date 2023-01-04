@@ -5,7 +5,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-from has_down_load import has_save_to_cloud
+from record import has_save_to_cloud
 
 options = webdriver.EdgeOptions()
 # 只能打开一个edge浏览器，除非重新复制一份出来
@@ -17,14 +17,20 @@ saved_list = []
 
 
 def find_gallery_herf(model_name, n):
+    """
+
+    :param model_name: 模特名称
+    :param n: 从第几页开始
+    :return:
+    """
     global saved_list
-    saved_list = has_save_to_cloud(model_name)
+    saved_list.extend(has_save_to_cloud(model_name))
     n = 1 if n <= 1 else n
     for page_num in range(n, 1000):
         if page_num == 1:
-            str_url = "https://www.hdmisx.com/tag/" + model_name
+            str_url = "https://www.hdmizz.com/tag/" + model_name
         else:
-            str_url = "https://www.hdmisx.com/tag/" + model_name + "/page/" + str(page_num)
+            str_url = "https://www.hdmizz.com/tag/" + model_name + "/page/" + str(page_num)
 
         url = urllib3.util.parse_url(str_url)
         print(url)
@@ -50,16 +56,21 @@ def find_gallery_herf(model_name, n):
         if (gallery_num < 12):
             "已经没有图了..."
             break
-
+    save_to_txt(model_name)
     driver.quit()
 
 
 def find_source(href):
+    """
+    查找链接
+    :param href:
+    :return:
+    """
     driver.get(href)
 
     title = driver.find_element(By.CLASS_NAME, "title").text
     if title in saved_list:
-        print("已经保存到云了")
+        print(title,"已经保存到云了")
         return
     class_down_price = driver.find_element(By.CLASS_NAME, "down-price")
     vip = class_down_price.find_element(By.TAG_NAME, "span").text
@@ -92,6 +103,12 @@ def find_source(href):
 
 
 def save_cloud(url=None, title=None):
+    """
+    保存到百度云
+    :param url: 链接
+    :param title: 标题
+    :return:
+    """
     if url is not None:
         driver.get(url)
     try:
@@ -119,10 +136,13 @@ def save_cloud(url=None, title=None):
         save_list.append(title)
     except Exception as e:
         print(e)
-    save_to_txt(model_name)
-
 
 def save_to_txt(model_name):
+    """
+    把转存到百度云的图写入到txt文件中
+    :param model_name:
+    :return:
+    """
     txt = model_name + ".txt"
     with open(txt, 'a', encoding="utf-8") as f:
         for t in save_list:
@@ -134,7 +154,5 @@ def save_to_txt(model_name):
 
 
 if __name__ == '__main__':
-    model_name = "梦心月"
-    find_gallery_herf(model_name, 1)
-    # url = 'https://www.hdmisx.com/wp-content/plugins/erphpdown/download.php?postid=224920&url=&key=1'
-    # save_cloud(url)
+    model_name = "安然Maleah"
+    find_gallery_herf(model_name, 4)
