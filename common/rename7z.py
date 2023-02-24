@@ -30,7 +30,7 @@ def rename_yw_7z(filename):
         fileyw_path = os.path.join(path, filename)
         file7z_path = os.path.join(path, file7z)
         os.rename(fileyw_path, file7z_path)
-        print(file7z_path)
+        print("重命名为:",file7z_path)
     else:
         file7z = filename
         file7z_path = os.path.join(path, file7z)
@@ -118,4 +118,4 @@ if __name__ == '__main__':
     path = r"D:\下载\BaiduNetdiskDownload"
     pwd = "youwu"
 
-    renameTo7z(path, False)
+    renameTo7z(path, True)
