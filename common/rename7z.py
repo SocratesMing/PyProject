@@ -116,6 +116,7 @@ def renameTo7z(path: str, flag=False):
 
 if __name__ == '__main__':
     path = r"D:\下载\BaiduNetdiskDownload"
+    # path = r"C:\Users\sututu\Downloads"
     pwd = "youwu"
 
     renameTo7z(path, True)
