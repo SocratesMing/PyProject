@@ -32,7 +32,6 @@ class MainWindow(QMainWindow):
 
         self.central_widget = QWidget(self)
         self.setCentralWidget(self.central_widget)
-
         self.layout = QVBoxLayout(self.central_widget)
 
         # 添加一个按钮，点击按钮时显示Matplotlib绘图窗口

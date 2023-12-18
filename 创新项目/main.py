@@ -1,14 +1,12 @@
 # This Python file uses the following encoding: utf-8
 import csv
 import os
+import subprocess
 import sys
 
-# from PyQt6.QtWidgets import QFileDialog
 from PyQt6.QtWidgets import QApplication, QWidget, QFileDialog, QMessageBox
-# from PyQt6.QtWidgets import QFileDialog
-from ui_form import Ui_Form
-import pandas as pd
-from hotmap import plot_hotmap
+from ui_main import Ui_Form
+from heatmap import plot_hotmap
 
 
 class MainWindow(QWidget):
@@ -23,6 +21,10 @@ class MainWindow(QWidget):
         self.ui.btn_check_csv.clicked.connect(self.check_csv)
         self.ui.btn_plot.clicked.connect(self.plot_hotmap)
         self.ui.btn_build_qtfile.clicked.connect(self.saveFile)
+        self.ui.btn_res_path.clicked.connect(self.show_directory)
+        self.ui.btn_open_res_path.clicked.connect(self.open_res)
+
+        # self.matplotlib_widget = None
 
     def plot_hotmap(self):
         pass
@@ -41,10 +43,35 @@ class MainWindow(QWidget):
                 y_step = int(time_plot)
         except Exception as e:
             QMessageBox.critical(self, '错误', '输入格式错误')
+        res_path = os.path.abspath(self.ui.le_res_path.text())
+        matplotlib_widget = plot_hotmap(csv_path, res_path, x_step, y_step)
+        # self.matplotlib_widget.show()
+        if matplotlib_widget.plot():
+            QMessageBox.information(self, '信息', '处理完毕')
+        else:
+            QMessageBox.critical(self, '错误', '处理异常')
 
-        plt = plot_hotmap(csv_path, x_step, y_step)
-        plt.show()
-        plt.plot()
+        # x = [1, 2, 3, 4, 5]
+        # y = [2, 3, 5, 7, 11]
+        # self.matplotlib_widget.plot_data(x,y)
+
+    def show_directory(self):
+        directory = QFileDialog.getExistingDirectory(self, '选择目录')
+        if directory:
+            self.ui.le_res_path.setText(directory)
+
+    def open_res(self):
+        # 打开文件对话框，获取用户选择的目录
+        directory = os.path.abspath(self.ui.le_res_path.text())
+
+        if os.path.exists(directory):
+            try:
+                # 使用explorer命令打开资源管理器并定位到给定路径
+                subprocess.run(['explorer', directory], check=True)
+            except subprocess.CalledProcessError as e:
+                print(f"打开资源管理器时发生错误: {e}")
+        else:
+            QMessageBox.critical(self, '错误', '路径不存在')
 
     #
     def showFileDialog(self):
@@ -57,23 +84,31 @@ class MainWindow(QWidget):
 
     def check_csv(self):
         csv_path = self.ui.le_csv_file_path.text()
+        ok=True
         try:
             # 读取CSV文件
-            df = pd.read_csv(csv_path)
+            with open(csv_path, 'r', newline='') as csv_file:
+                csv_reader = csv.reader(csv_file)
 
-            # 校验行和列是否为空
-            if df.empty or df.isnull().values.any():
-                QMessageBox.critical(self, '错误', '文件包含空行或空列')
+                for row_number, row in enumerate(csv_reader, start=1):
+                    # 检查是否有空元素
+                    if any(element == '' for element in row):
+                        QMessageBox.critical(self, '错误', 'csv文件有非空字符，请处理！')
+                        return False
 
-            # 校验是否可以将所有元素转换为整数
-            if not df.applymap(lambda x: str(x).isdigit()).all().all():
-                QMessageBox.critical(self, '错误', '文件包含不能转换为整数的元素')
+                    # 检查是否有非数字类字符
+                    for col_number, value in enumerate(row, start=1):
+                        if not str(value.strip()).isdigit():
+                            print(value)
+                            QMessageBox.critical(self, '错误', 'csv文件有非数字类字符，请处理！')
+                            return False
 
-            QMessageBox.information(self, '信息', 'csv文件合法')
-
+            if ok:
+                QMessageBox.information(self, '信息', 'csv文件合法')
+                return True
 
         except Exception as e:
-            print(f"错误：{e}")
+            QMessageBox.critical(self, '错误', 'csv文件有非数字类字符，请处理！')
             return False
 
     def saveFile(self):
@@ -109,3 +144,5 @@ if __name__ == "__main__":
     window = MainWindow()
     window.show()
     sys.exit(app.exec())
+# pip install pyinstaller
+# pyinstaller --name="热力图" --windowed --onefile -add-data "./icon" main.py
