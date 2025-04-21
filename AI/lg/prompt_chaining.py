@@ -1,7 +1,8 @@
 from langgraph.func import entrypoint, task
 from langchain_ollama import ChatOllama
 
-llm = ChatOllama(model="gemma3:4b")
+# llm = ChatOllama(model="gemma3:4b")
+llm = ChatOllama(model="llama3.2:latest")
 
 # Tasks
 @task

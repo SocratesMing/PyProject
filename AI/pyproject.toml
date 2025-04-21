@@ -4,4 +4,8 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "langgraph-cli[inmem]>=0.1.77",
+    "pyqlib>=0.9.6",
+    "yahooquery>=2.3.7",
+]

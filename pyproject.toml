@@ -5,14 +5,17 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "aio-pika>=9.5.5",
     "fastapi>=0.115.11",
     "langchain-anthropic>=0.3.9",
     "langchain-ollama>=0.2.3",
     "langgraph>=0.3.8",
     "langsmith>=0.3.13",
     "py7zr>=0.22.0",
+    "rich>=13.9.4",
     "selenium>=4.29.0",
     "urllib3>=2.3.0",
+    "uvicorn[standard]>=0.34.0",
 ]
 
 [tool.uv.workspace]

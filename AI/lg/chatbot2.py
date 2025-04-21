@@ -8,8 +8,7 @@ from langchain_ollama import ChatOllama
 from langchain_core.messages import HumanMessage, AIMessage, SystemMessage, ToolMessage
 from langgraph.graph import StateGraph, START, END
 from langgraph.graph.message import add_messages
-
-
+from  rich import console,print_json,print
 def get_temperature(
         location: str, date: str = datetime.strftime(datetime.now(), "%Y-%m-%d")
 ):
@@ -25,7 +24,8 @@ def get_temperature(
     return {"location": location, "date": date, "temperature": random.uniform(10, 30), "temp_scale": "摄氏度"}
 
 
-llm = ChatOllama(model="llama3.1:8b").bind_tools([get_temperature])
+# llm = ChatOllama(model="llama3.1:8b").bind_tools([get_temperature])
+llm = ChatOllama(model="llama3.2:latest").bind_tools([get_temperature])
 
 
 class State(TypedDict):
@@ -41,6 +41,7 @@ def get_user_input(state: State) -> dict[str, HumanMessage]:
 
 def get_response(state: State) -> dict[str, AIMessage]:
     print("get_response ", state["messages"])
+
     res = llm.invoke(state["messages"])
     return {"messages": res}
 
@@ -82,10 +83,10 @@ workflow.add_edge("get_tool_response", "get_response")
 
 app = workflow.compile()
 
-# app.get_graph().draw_mermaid_png(output_file_path="1.png")
+app.get_graph().draw_png(output_file_path="1.png")
 
-for event in app.stream(
-        {"messages": [SystemMessage(content="You are a helpful assistant.")]}
-):
-    print(event, end="\n\n")
-    pass
+# for event in app.stream(
+#         {"messages": [SystemMessage(content="You are a helpful assistant.")]}
+# ):
+#     print(event, end="\n\n")
+#     pass
