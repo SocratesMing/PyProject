@@ -6,17 +6,33 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "aio-pika>=9.5.5",
+    "backtrader>=1.9.78.123",
     "fastapi>=0.115.11",
+    "jupyterlab>=4.4.0",
     "langchain-anthropic>=0.3.9",
-    "langchain-ollama>=0.2.3",
     "langgraph>=0.3.8",
     "langsmith>=0.3.13",
+    "matplotlib>=3.10.1",
+    "mplfinance>=0.12.10b0",
+    "notebook>=7.4.0",
+    "pandas-ta>=0.3.14b0",
     "py7zr>=0.22.0",
+    "refinitiv-data>=1.6.2",
+    "refinitiv-dataplatform>=1.0.0a21",
     "rich>=13.9.4",
+    "scikit-learn>=1.6.1",
     "selenium>=4.29.0",
+    "statsmodels>=0.14.4",
+    "ta-lib>=0.6.3",
+    "torch>=2.6.0",
+    "tqdm>=4.67.1",
     "urllib3>=2.3.0",
     "uvicorn[standard]>=0.34.0",
 ]
 
 [tool.uv.workspace]
-members = ["AI", "web", "cook_book", "machine_learning", "auto_work", "tools", "jupyter_book"]
+members = ["AI", "web", "cook_book", "machine_learning", "auto_work", "tools", "jupyter_book", "Quant"]
+
+[[tool.uv.index]]
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+default = true

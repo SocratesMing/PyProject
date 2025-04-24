@@ -7,5 +7,12 @@ requires-python = ">=3.12"
 dependencies = [
     "langgraph-cli[inmem]>=0.1.77",
     "pyqlib>=0.9.6",
+    "torch>=2.6.0",
+    "torchaudio>=2.6.0",
+    "torchvision>=0.21.0",
     "yahooquery>=2.3.7",
 ]
+
+[[tool.uv.index]]
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+default = true
