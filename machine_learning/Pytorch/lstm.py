@@ -53,9 +53,12 @@ class LSTMModel(nn.Module):
         # 初始化隐藏状态
         h0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(x.device)
         c0 = torch.zeros(self.num_layers, x.size(0), self.hidden_size).to(x.device)
-
+        print("x",x)
         # LSTM前向传播
         out, _ = self.lstm(x, (h0, c0))
+        print("out",out)
+        print("out[:, -1, :]",out[:, -1, :])
+
         out = self.fc(out[:, -1, :])  # 取最后一个时间步的输出
         return out
 
@@ -65,6 +68,7 @@ def train_model(model, X_train, y_train, X_test, y_test, epochs=100, batch_size=
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = model.to(device)
     criterion = nn.MSELoss()
+    print("model.parameters()",model.parameters())
     optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
     X_train, y_train = X_train.to(device), y_train.to(device)
@@ -111,6 +115,8 @@ def main():
     file_path = 'data/USDCNHSP.csv'  # 替换为你的CSV文件路径
     sequence_length = 10
     X_train, X_test, y_train, y_test, scaler = load_and_preprocess_data(file_path, sequence_length)
+    print(X_train.shape,X_train)
+    print(y_train.shape,y_train)
 
     # 初始化模型
     model = LSTMModel(input_size=1, hidden_size=50, num_layers=2, dropout=0.2)
