@@ -21,6 +21,10 @@ class TimeSeriesDataset(Dataset):
     def __getitem__(self, index):
         x = self.data[index:index + self.seq_length]
         y = self.data[index + self.seq_length, -1]  # 预测收盘价（索引最后一列）
+        # x_tensor, y_tensor = torch.FloatTensor(x), torch.FloatTensor([y])
+        # print("数据集中是否含有 nan {} 数据集中是否含有 nan {} ", torch.isnan(x_tensor).any(), y_tensor)
+
+        # return x_tensor, y_tensor
         return torch.FloatTensor(x), torch.FloatTensor([y])
 
 
@@ -67,8 +71,11 @@ def preprocess_data(file_path, seq_length=10, batch_size=64):
     logger.info("读取文件 {}", file_path)
     df = pd.read_csv(file_path)
     # df = df.iloc[::200]
-    # print("source data", df.head())
-
+    print("source data", df.shape)
+    if df.isna().any().any():
+        df = df.dropna()
+        logger.info("清除掉df中的na值 ")
+    logger.info("df中的含na值 {}", df.isna().any().any())
     # 假设CSV包含'Date', 'Open', 'High', 'Low', 'Close'列
 
     # features = df[['open', 'high', 'low', 'close']].values
@@ -90,6 +97,7 @@ def preprocess_data(file_path, seq_length=10, batch_size=64):
     val_indices = list(range(train_size, len(dataset)))
     train_dataset = torch.utils.data.Subset(dataset, train_indices)
     test_dataset = torch.utils.data.Subset(dataset, val_indices)
+
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
     test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 
@@ -162,15 +170,16 @@ def cal_res():
 # 主函数
 def main(file_path):
     # 参数设置
-    seq_length = 32
-    hidden_size = 5
+    seq_length = 48
+    hidden_size = 7
     num_layers = 5
-    num_epochs = 1000
-    learning_rate = 0.00001
-    batch_size = 32
-    dropout = 0.0
-    logger.info("seq_length:{} hidden_size:{} num_layers:{} num_epochs:{} learning_rate:{} batch_size:{} dropout:{}",
-                seq_length, hidden_size, num_layers, num_epochs, learning_rate, batch_size, dropout)
+    num_epochs = 100
+    learning_rate = 0.01
+    batch_size = 48
+    dropout = 0.2
+    logger.info(
+        "seq_length:{} hidden_size:{} num_layers:{} num_epochs:{} learning_rate:{} batch_size:{} dropout:{}",
+        seq_length, hidden_size, num_layers, num_epochs, learning_rate, batch_size, dropout)
     # 数据预处理
     train_loader, test_loader, scaler, input_size = preprocess_data(file_path, seq_length, batch_size)
 
@@ -222,7 +231,9 @@ def main(file_path):
 if __name__ == "__main__":
     # 替换为你的CSV文件路径
     # file_path = "../data/USDCNHSP.csv"
-    file_path = "./eur-22-24-5m_MA[5_10_20].csv"
+    # file_path = "./eur-22-24-5m_MA[5_10_20].csv"
+    # file_path = "./eur-22-24-5m_10.csv"
+    file_path = r"D:\Code\Python\PyProject\Quant\lseg\senti_pD.csv"
     try:
         main(file_path)
     except Exception as e:

@@ -8,6 +8,7 @@ dependencies = [
     "aio-pika>=9.5.5",
     "backtrader>=1.9.78.123",
     "fastapi>=0.115.11",
+    "jupyter-server>=2.15.0",
     "jupyterlab>=4.4.0",
     "langchain-anthropic>=0.3.9",
     "langgraph>=0.3.8",
@@ -15,7 +16,9 @@ dependencies = [
     "matplotlib>=3.10.1",
     "mplfinance>=0.12.10b0",
     "notebook>=7.4.0",
+    "openai>=1.78.1",
     "pandas-ta>=0.3.14b0",
+    "plotly>=6.1.1",
     "py7zr>=0.22.0",
     "pyqlib>=0.9.6",
     "refinitiv-data>=1.6.2",
@@ -31,18 +34,18 @@ dependencies = [
     "uvicorn[standard]>=0.34.0",
 ]
 
-[tool.uv.sources]
-torch = [
-  { index = "pytorch-cu126", marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
-]
-torchvision = [
-  { index = "pytorch-cu126", marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
-]
-
-[[tool.uv.index]]
-name = "pytorch-cu126"
-url = "https://download.pytorch.org/whl/cu126"
-explicit = true
+#[tool.uv.sources]
+#torch = [
+#  { index = "pytorch-cu126", marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
+#]
+#torchvision = [
+#  { index = "pytorch-cu126", marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
+#]
+#
+#[[tool.uv.index]]
+#name = "pytorch-cu126"
+#url = "https://download.pytorch.org/whl/cu126"
+#explicit = true
 
 [tool.uv.workspace]
 members = ["AI", "web", "cook_book", "machine_learning", "auto_work", "tools", "jupyter_book", "Quant"]
