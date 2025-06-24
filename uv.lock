@@ -2126,6 +2126,15 @@ wheels = [
 ]
 
 [[package]]
+name = "narwhals"
+version = "1.40.0"
+source = { registry = "https://pypi.tuna.tsinghua.edu.cn/simple" }
+sdist = { url = "https://pypi.tuna.tsinghua.edu.cn/packages/f0/57/283881d06788c2fddd05eb7f0d6c82c5116d2827e83b845c796c74417c56/narwhals-1.40.0.tar.gz", hash = "sha256:17064abffd264ea1cfe6aefc8a0080f3a4ffb3659a98bcad5456ca80b88f2a0a", size = 487625 }
+wheels = [
+    { url = "https://pypi.tuna.tsinghua.edu.cn/packages/2c/e6/4d16dfa26f40230593c216bf695da01682fdbdf6af4e79abef572ab26bce/narwhals-1.40.0-py3-none-any.whl", hash = "sha256:1e6c731811d01c61147c52433b4d4edfb6511aaf2c859aa01c2e8ca6ff4d27e5", size = 357340 },
+]
+
+[[package]]
 name = "nbclient"
 version = "0.10.2"
 source = { registry = "https://pypi.tuna.tsinghua.edu.cn/simple" }
@@ -2358,6 +2367,25 @@ version = "12.4.127"
 source = { registry = "https://pypi.tuna.tsinghua.edu.cn/simple" }
 wheels = [
     { url = "https://pypi.tuna.tsinghua.edu.cn/packages/87/20/199b8713428322a2f22b722c62b8cc278cc53dffa9705d744484b5035ee9/nvidia_nvtx_cu12-12.4.127-py3-none-manylinux2014_x86_64.whl", hash = "sha256:781e950d9b9f60d8241ccea575b32f5105a5baf4c2351cab5256a24869f12a1a", size = 99144 },
+]
+
+[[package]]
+name = "openai"
+version = "1.78.1"
+source = { registry = "https://pypi.tuna.tsinghua.edu.cn/simple" }
+dependencies = [
+    { name = "anyio" },
+    { name = "distro" },
+    { name = "httpx" },
+    { name = "jiter" },
+    { name = "pydantic" },
+    { name = "sniffio" },
+    { name = "tqdm" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://pypi.tuna.tsinghua.edu.cn/packages/a4/3f/4e5e7b0548a15eabc4a755c93cd5f9564887e3d2fd45b6ff531352e5859d/openai-1.78.1.tar.gz", hash = "sha256:8b26b364531b100df1b961d03560042e5f5be11301d7d49a6cd1a2b9af824dca", size = 442985 }
+wheels = [
+    { url = "https://pypi.tuna.tsinghua.edu.cn/packages/3c/4c/3889bc332a6c743751eb78a4bada5761e50a8a847ff0e46c1bd23ce12362/openai-1.78.1-py3-none-any.whl", hash = "sha256:7368bf147ca499804cc408fe68cdb6866a060f38dec961bbc97b04f9d917907e", size = 680917 },
 ]
 
 [[package]]
@@ -2629,6 +2657,19 @@ source = { registry = "https://pypi.tuna.tsinghua.edu.cn/simple" }
 sdist = { url = "https://pypi.tuna.tsinghua.edu.cn/packages/b6/2d/7d512a3913d60623e7eb945c6d1b4f0bddf1d0b7ada5225274c87e5b53d1/platformdirs-4.3.7.tar.gz", hash = "sha256:eb437d586b6a0986388f0d6f74aa0cde27b48d0e3d66843640bfb6bdcdb6e351", size = 21291 }
 wheels = [
     { url = "https://pypi.tuna.tsinghua.edu.cn/packages/6d/45/59578566b3275b8fd9157885918fcd0c4d74162928a5310926887b856a51/platformdirs-4.3.7-py3-none-any.whl", hash = "sha256:a03875334331946f13c549dbd8f4bac7a13a50a895a0eb1e8c6a8ace80d40a94", size = 18499 },
+]
+
+[[package]]
+name = "plotly"
+version = "6.1.1"
+source = { registry = "https://pypi.tuna.tsinghua.edu.cn/simple" }
+dependencies = [
+    { name = "narwhals" },
+    { name = "packaging" },
+]
+sdist = { url = "https://pypi.tuna.tsinghua.edu.cn/packages/8a/7c/f396bc817975252afbe7af102ce09cd12ac40a8e90b8699a857d1b15c8a3/plotly-6.1.1.tar.gz", hash = "sha256:84a4f3d36655f1328fa3155377c7e8a9533196697d5b79a4bc5e905bdd09a433", size = 7543694 }
+wheels = [
+    { url = "https://pypi.tuna.tsinghua.edu.cn/packages/75/f3/f8cb7066f761e2530e1280889e3413769891e349fca35ee7290e4ace35f5/plotly-6.1.1-py3-none-any.whl", hash = "sha256:9cca7167406ebf7ff541422738402159ec3621a608ff7b3e2f025573a1c76225", size = 16118469 },
 ]
 
 [[package]]
@@ -3052,6 +3093,7 @@ dependencies = [
     { name = "aio-pika" },
     { name = "backtrader" },
     { name = "fastapi" },
+    { name = "jupyter-server" },
     { name = "jupyterlab" },
     { name = "langchain-anthropic" },
     { name = "langgraph" },
@@ -3059,7 +3101,9 @@ dependencies = [
     { name = "matplotlib" },
     { name = "mplfinance" },
     { name = "notebook" },
+    { name = "openai" },
     { name = "pandas-ta" },
+    { name = "plotly" },
     { name = "py7zr" },
     { name = "pyqlib" },
     { name = "refinitiv-data" },
@@ -3080,6 +3124,7 @@ requires-dist = [
     { name = "aio-pika", specifier = ">=9.5.5" },
     { name = "backtrader", specifier = ">=1.9.78.123" },
     { name = "fastapi", specifier = ">=0.115.11" },
+    { name = "jupyter-server", specifier = ">=2.15.0" },
     { name = "jupyterlab", specifier = ">=4.4.0" },
     { name = "langchain-anthropic", specifier = ">=0.3.9" },
     { name = "langgraph", specifier = ">=0.3.8" },
@@ -3087,7 +3132,9 @@ requires-dist = [
     { name = "matplotlib", specifier = ">=3.10.1" },
     { name = "mplfinance", specifier = ">=0.12.10b0" },
     { name = "notebook", specifier = ">=7.4.0" },
+    { name = "openai", specifier = ">=1.78.1" },
     { name = "pandas-ta", specifier = ">=0.3.14b0" },
+    { name = "plotly", specifier = ">=6.1.1" },
     { name = "py7zr", specifier = ">=0.22.0" },
     { name = "pyqlib", specifier = ">=0.9.6" },
     { name = "refinitiv-data", specifier = ">=1.6.2" },

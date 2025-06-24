@@ -19,6 +19,9 @@ pmip
 .sw[nop]
 *.tmp
 *.vim
+*.bin
+*.csv
+*.txt
 .vscode
 tags
 cscope.out
@@ -63,6 +66,7 @@ GTAGS
 ################
 # meson build/installation directories
 build
+.idea
 build-install
 # meson python output
 .mesonpy-native-file.ini
