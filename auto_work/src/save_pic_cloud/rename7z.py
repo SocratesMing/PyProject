@@ -40,7 +40,7 @@ def rename_yw_7z(filename):
 
 
 def extract_7zfile(file7z_path, path_extract):
-    if file7z_path.endswith("7z"):
+    if file7z_path.endswith("7z") :
         with py7zr.SevenZipFile(file7z_path, mode='r', password=pwd) as z7:
             print("正在解压:", file7z_path)
             z7.extractall(path_extract)
@@ -51,6 +51,18 @@ def extract_7zfile(file7z_path, path_extract):
             print("正在解压:", file7z_path)
             tar.extractall(path_extract)
             print("解压至:", path_extract)
+
+    if file7z_path.endswith("001") :
+        with py7zr.SevenZipFile(file7z_path, mode='r', password=pwd) as archive:
+            # 获取分卷数量
+            volume_count = archive.get_volume_count()
+
+            # 解压缩所有分卷文件
+            for i in range(volume_count):
+                archive.extractall(path='output_folder')
+                print("正在解压:", file7z_path)
+                z7.extractall(path_extract)
+                print("解压至:", path_extract)
 
 
 def extract_sub7zfile(file7z_path2, file_extract_path, dist_path):
@@ -115,8 +127,8 @@ def renameTo7z(path: str, flag=False):
 
 
 if __name__ == '__main__':
-    path = r"D:\下载\BaiduNetdiskDownload"
+    path = r"D:\BaiduNetdiskDownload\anran"
     # path = r"C:\Users\sututu\Downloads"
     pwd = "youwu"
 
-    renameTo7z(path, True)
+    renameTo7z(path, False)

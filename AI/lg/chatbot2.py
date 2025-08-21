@@ -32,9 +32,6 @@ class State(TypedDict):
     messages: Annotated[list, add_messages]
 
 
-workflow = StateGraph(State)
-
-
 def get_user_input(state: State) -> dict[str, HumanMessage]:
     return {"messages": HumanMessage(content=input("User: "))}
 
@@ -71,6 +68,7 @@ def user_or_tool_call(state: State) -> Literal["get_user_input", "get_tool_respo
     print("Assistant:", state["messages"][-1].content)
     return "get_user_input"
 
+workflow = StateGraph(State)
 
 workflow.add_node("get_user_input", get_user_input)
 workflow.add_node("get_response", get_response)

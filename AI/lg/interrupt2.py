@@ -1,82 +1,58 @@
-from langgraph.func import task, entrypoint
-from langgraph.types import Command, interrupt
-from langgraph.checkpoint.memory import MemorySaver
+from typing import TypedDict, Annotated, Literal
 
-print("dddddddd")
-
-
-@task
-def step_1():
-    print("---Step 1---")
-    pass
-
-@task
-def human_feedback(ddd):
-    print("---human_feedback---")
-    # feedback = interrupt("Please provide feedback:")
-    return {"user_feedback": "sss"}
-
-@task
-def judge():
-    print("---judge---")
-    feedback = interrupt("Please judge feedback:")
-    return "ok" in feedback
-
-@task
-def step_3():
-    print("---Step 3---")
-    pass
+from langgraph.checkpoint.memory import InMemorySaver
+from langgraph.func import entrypoint, task
+from langgraph.graph import StateGraph, add_messages, START, END
+from langgraph.types import interrupt, Command
 
 
-# builder = StateGraph(State)
-# builder.add_node("step_1", step_1)
-# builder.add_node("human_feedback", human_feedback)
-# builder.add_node("step_3", step_3)
-# builder.add_edge(START, "step_1")
-# builder.add_edge("step_1", "human_feedback")
-# builder.add_edge("human_feedback", "step_3")
-# builder.add_edge("step_3", END)
-#
-# # Set up memory
-# memory = MemorySaver()
-#
-# # Add
-# graph = builder.compile(checkpointer=memory)
+def task1(input_):
+    print(f"task1: {input_}")
+    print("Task 1")
 
-@entrypoint(checkpointer = MemorySaver())
-def graph(ii:str):
-    step_1()
-    human_feedback(ddd=111)
-    if judge():
-        human_feedback(ddd=222)
+
+def task2() -> Literal["task1", "task2"]:
+    print("Task 2")
+    value = interrupt("please input value")
+    if "ok" in value:
+        return "task1"
     else:
+        return "task3"
 
-        step_3()
-# View
-# Input
-initial_input = {"input": "hello world"}
 
-# Thread
-thread = {"configurable": {"thread_id": "1"}}
+def task3():
+    print("Task 3")
 
-# Run the graph until the first interruption
-# Continue the graph execution
-# for event in graph.stream(initial_input, thread, stream_mode="updates"):
-#     print(event)
-#     print("\n")
-#
-# # Continue the graph execution
-# for event in graph.stream(
-#     Command(resume="go to step 3!"), thread, stream_mode="updates"
-# ):
-#     print(event)
-#     print("\n")
-# graph=workflow
-# print("dddd")
-for event in graph.stream(initial_input, thread):#
-    print(event)
-    print("\n")
 
-for event in graph.stream(Command(resume="ok"), thread, stream_mode="updates"):
-    print(event)
-    print("\n")
+def task4():
+    print("Task 4")
+
+
+class State(TypedDict):
+    messages: Annotated[list, add_messages]
+
+
+workflow = StateGraph(State)
+
+workflow.add_node(task1)
+workflow.add_node(task2)
+workflow.add_node(task3)
+workflow.add_node(task4)
+
+workflow.add_edge(START, "task1")
+workflow.add_edge("task1", "task2")
+workflow.add_edge("task3", "task4")
+workflow.add_edge("task4", END)
+config = {"configurable": {"thread_id": "1"}}
+
+inputs = {
+    "messages": "你好"
+}
+print("------")
+graph = workflow.compile()
+
+for event in graph.stream(inputs,config):
+    print("event",event)
+
+# print("++++++++")
+# workflow.stream(Command(resume="ok"),thread=thread)
