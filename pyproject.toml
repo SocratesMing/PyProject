@@ -5,7 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "aio-pika>=9.5.5",
+#    "aio-pika>=9.5.5",
     "backtrader>=1.9.78.123",
     "fastapi>=0.115.11",
     "jupyter-server>=2.15.0",
@@ -17,12 +17,10 @@ dependencies = [
     "mplfinance>=0.12.10b0",
     "notebook>=7.4.0",
     "openai>=1.78.1",
-    "pandas-ta>=0.3.14b0",
+#    "pandas-ta>=0.3.14b0",
     "plotly>=6.1.1",
     "py7zr>=0.22.0",
     "pyqlib>=0.9.6",
-    "refinitiv-data>=1.6.2",
-    "refinitiv-dataplatform>=1.0.0a21",
     "rich>=13.9.4",
     "scikit-learn>=1.6.1",
     "seaborn>=0.13.2",
@@ -51,8 +49,6 @@ name = "pytorch-cu126"
 url = "https://download.pytorch.org/whl/cu126"
 explicit = true
 
-[tool.uv.workspace]
-members = ["AI", "web", "cook_book", "machine_learning", "auto_work", "tools", "jupyter_book", "Quant"]
 
 [[tool.uv.index]]
 url = "https://pypi.tuna.tsinghua.edu.cn/simple"
